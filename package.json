@@ -4,26 +4,49 @@
   "private": true,
   "main": "server/index.js",
   "scripts": {
-    "// TODO: Add your start script if you are using a front-end JS framework": "",
-    "start": "",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "server": "nodemon server",
-    "// TODO: You can remove concurrently if you're not using a front-end JS framework": "",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start\""
   },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "cors": "^2.8.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
   "devDependencies": {
-    "body-parser": "1.18.3",
-    "concurrently": "^4.1.0",
-    "express": "4.16.4",
-    "nodemon": "^1.18.10",
-    "sqlite3": "^4.0.7"
+    "body-parser": "^1.20.2",
+    "concurrently": "^8.2.2",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.3",
+    "sqlite3": "^5.1.7"
   },
   "keywords": [],
   "description": "",
-  "proxy": "http://localhost:3001",
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:3001"
 }

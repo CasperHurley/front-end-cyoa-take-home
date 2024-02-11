@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 
 const DataAccessObject = require('./dataAccessObject');
 const Comment = require('./comment');
+const cors = require('cors')
 
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,10 +26,8 @@ app.post('/createComment', function(request, response) {
   });
 });
 
-app.get('/getComment', function(request, response) {
-  const { body } = request;
-  const { id } = body;
-  comment.getComment(id).then(result => {
+app.get('/getComment/:id', function(request, response) {
+  comment.getComment(request.params.id).then(result => {
     response.send(result);
   });
 });
@@ -40,6 +40,12 @@ app.get('/getComments', function(request, response) {
 
 app.delete('/deleteComments', function(request, response) {
   comment.deleteComments().then(result => {
+    response.send(result);
+  });
+});
+
+app.delete('/deleteComment/:id', function(request, response) {
+  comment.deleteComment(request.params.id).then(result => {
     response.send(result);
   });
 });
