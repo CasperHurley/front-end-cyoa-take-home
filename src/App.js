@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import './App.css';
-import CommentFeed from './components/CommentFeed';
-import NewCommentForm from './components/NewCommentForm';
-import { Api } from './api/index'
 import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AppHeader from './components/GlobalHeader/AppHeader'
+import HomePage from './pages/HomePage'
+import EditCommentPage from './pages/EditCommentPage';
 
 function App() {
   const [comments, setComments] = useState({data: [], error: null, isLoading: false})
@@ -45,14 +46,8 @@ function App() {
     sendMessage(JSON.stringify({type: 'deleteComment', id }))
   }
 
-  const getComment = (id) => {
-    Api.get(`/api/comment/${id}`)
-    .then(response => {
-      console.log(response)
-    })
-    .catch(error => {
-      console.log("Error fetching comment", error)
-    })
+  const editComment = ({id, name, message}) => {
+    sendMessage(JSON.stringify({type: 'editComment', id, name, message }))
   }
 
   // NEED
@@ -66,14 +61,35 @@ function App() {
     // Intl
     // Global header
     // Some css razzle dazzle
-  console.log("READY STATE", readyState)
 
   return (
-    <div className="App">
-      <NewCommentForm submitComment={submitComment} />
-      <CommentFeed comments={comments} />
-      {readyState === ReadyState.OPEN && <button onClick={deleteAllComments}>Delete All Comments</button>}
-    </div>
+    <Router>
+      <div className="App">
+        <AppHeader />
+        <Routes>
+          <Route exact path="/" 
+            element={
+              <HomePage 
+                comments={comments}
+                submitComment={submitComment}
+                deleteComment={deleteComment}
+                ReadyState={ReadyState}
+                readyState={readyState}
+                deleteAllComments={deleteAllComments}
+              />
+            } 
+          />
+          <Route path="/edit/:id" 
+            element={
+              <EditCommentPage 
+                editComment={editComment}
+                deleteComment={deleteComment}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -9,7 +9,8 @@ class Comment {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       message TEXT,
-      created DATETIME DEFAULT CURRENT_TIMESTAMP)`;
+      created DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated DATETIME DEFAULT CURRENT_TIMESTAMP)`;
     return this.dataAccessObject.run(sql);
   }
 
@@ -39,9 +40,17 @@ class Comment {
     );
   }
 
-  getComments() {
+  getAllComments() {
     return this.dataAccessObject.all('SELECT * FROM comments');
   }
+
+  editComment({name, message, id}) {
+    return this.dataAccessObject.run(
+      'UPDATE comments SET name = ?, message = ?, updated = CURRENT_TIMESTAMP WHERE id = ?',
+      [name, message, id]
+    )
+  }
+  
 }
 
 module.exports = Comment;

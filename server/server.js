@@ -9,7 +9,10 @@ const app = express();
 const socket = expressWS(app);
 const port = process.env.PORT || 3001;
 
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  optionsSuccessStatus: 200
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,17 +46,21 @@ app.ws('/comments', async (ws, req) => {
         await broadcastComments()
         break;
 
+      case 'editComment':
+        await comment.editComment({name, message, id})
+        await broadcastComments()
+        break;
+
       default:
         break;
     }
   });
-
   
 });
 
 async function broadcastComments() {
   try {
-    const comments = await comment.getComments();
+    const comments = await comment.getAllComments();
     socket.getWss().clients.forEach(client => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify({type: 'comments', comments}));
@@ -64,62 +71,14 @@ async function broadcastComments() {
   }
 };
 
-// app.post('/createComment', async function(request, response, next) {
-//   try {
-//     const result = await comment.createComment(request.body)
-//     await broadcastComments()
-//     response.send(result)
-//   } catch(err) {
-//     next(err)
-//   }
-// });
-
-app.get('/api/comment/:id', function(request, response, next) {
+app.get('/api/comment/:id', async function(request, response, next) {
   try {
-    comment.getComment(request.params.id).then(result => {
-      response.send(result);
-    });
+    const result = await comment.getComment(request.params.id)
+    response.send(result)
   } catch(err) {
     next(err)
   }
 });
-
-// app.get('/getComments', function(request, response, next) {
-//   try {
-//     comment.getComments().then(result => {
-//       response.send(result);
-//     });
-//   } catch(err) {
-//     next(err)
-//   }
-// });
-
-// app.delete('/deleteAllComments', async function(request, response, next) {
-//   try {
-//     await comment.deleteComments()
-//     await broadcastComments()
-//   } catch(err) {
-//     next(err)
-//   }
-// });
-
-// app.delete('/deleteComment/:id', async function(request, response, next) {
-//   try {
-//     await comment.deleteComment(request.params.id)
-//     await broadcastComments();
-//   } catch(err) {
-//     next(err)
-//   }
-// });
-
-// app.use((error, request, response, next) => {
-//   if (error.status) {
-//     response.status(error.status).send(error.message);
-//   } else {
-//     console.error(`ERROR: ${error.message}`);
-//     response.status(500).send('Internal Server Error');
-//   }
-// });
 
 app.use((request, response) => {
   response.status(404).send('These are not the routes you are looking for.');

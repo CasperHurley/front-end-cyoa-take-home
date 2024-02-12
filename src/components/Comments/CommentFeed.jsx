@@ -1,6 +1,6 @@
 import Comment from './Comment'
 
-function CommentFeed({comments}) {
+function CommentFeed({comments, deleteComment}) {
     
 
     // useEffect(() => {
@@ -17,6 +17,7 @@ function CommentFeed({comments}) {
                     <Comment 
                         key={comment.id}
                         comment={comment}
+                        deleteComment={deleteComment}
                     />
                 ))
                 :
