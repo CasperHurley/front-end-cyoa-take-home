@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
 
-function CommentForm({comment = {}, editComment, submitComment}) {
+function CommentForm({comment, editComment, submitComment}) {
     const [nameInput, setNameInput] = useState("")
     const [messageInput, setMessageInput] = useState("")
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        setNameInput(comment.name)
-        setMessageInput(comment.message)
+        if (comment) {
+            setNameInput(comment.name)
+            setMessageInput(comment.message)
+        }
     }, [comment])
 
     const handleClickSubmit = () => {
@@ -28,12 +34,34 @@ function CommentForm({comment = {}, editComment, submitComment}) {
     }
 
     return (
-        <div id='new-comment-form'>
-            <h2>Name</h2>
-            <input value={nameInput} onChange={e => setNameInput(e.target.value)}/>
-            <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)} />
-            <button onClick={handleClickSubmit}>{editComment ? "Update" : "Comment"}</button>
-        </div>
+        <Box 
+            id='new-comment-form'
+            component="form"
+        >
+            <Grid container direction="column" spacing={2}>
+                <Grid item>
+                    <TextField 
+                        label="Name"
+                        // helperText="Enter your name"
+                        value={nameInput} 
+                        onChange={e => setNameInput(e.target.value)}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField  
+                        label="Message"
+                        multiline
+                        // helperText="Write your message"
+                        value={messageInput} 
+                        onChange={e => setMessageInput(e.target.value)} 
+                    />
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" onClick={handleClickSubmit}>{editComment ? "Update" : "Comment"}</Button>
+                </Grid>
+            </Grid>
+            
+        </Box>
     );
 }
 

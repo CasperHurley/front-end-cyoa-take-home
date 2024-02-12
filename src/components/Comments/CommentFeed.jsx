@@ -1,14 +1,8 @@
 import Comment from './Comment'
 
 function CommentFeed({comments, deleteComment}) {
+    // make it scroll
     
-
-    // useEffect(() => {
-    //     if (lastMessage !== null) {
-    //         setComments((prev) => prev.concat(lastMessage));
-    //     }
-    //   }, [lastMessage, setComments]);
-
     return (
         <div id='comments-feed'>
             {

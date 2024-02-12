@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Api } from '../api/index'
 import CommentForm from '../components/Comments/CommentForm'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 function EditCommentPage({editComment, deleteComment}) {
     const [comment, setComment] = useState({data: {}, error: null, isLoading: false})
@@ -28,14 +31,20 @@ function EditCommentPage({editComment, deleteComment}) {
     }
 
     return (
-        <>
-            <h1>Edit Comment</h1>
-            <CommentForm 
-                comment={comment.data} 
-                editComment={editComment}
-            />
-            <button onClick={() => deleteComment(id)}>DELETE</button>
-        </>
+        <Grid container direction="column" spacing={2}>
+            <Grid item>
+                <Typography variant="h5">Edit Comment</Typography>
+            </Grid>
+            <Grid item>
+                <CommentForm 
+                    comment={comment.data} 
+                    editComment={editComment}
+                />
+            </Grid>
+            <Grid item>
+                <Button variant="outlined" color="error" onClick={() => deleteComment(id)}>Delete</Button>
+            </Grid>
+        </Grid>
     );
 }
 

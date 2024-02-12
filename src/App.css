@@ -8,15 +8,3 @@
 .card {
   padding: 2em;
 }
-
-#new-comment-form {
-  display: grid;
-}
-
-#comments-feed {
-  display: grid;
-}
-
-.comment {
-  display: grid;
-}

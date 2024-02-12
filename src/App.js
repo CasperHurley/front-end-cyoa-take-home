@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AppHeader from './components/GlobalHeader/AppHeader'
 import HomePage from './pages/HomePage'
 import EditCommentPage from './pages/EditCommentPage';
+import Grid from '@mui/material/Grid'
 
 function App() {
   const [comments, setComments] = useState({data: [], error: null, isLoading: false})
@@ -51,9 +55,7 @@ function App() {
   }
 
   // NEED
-    // a use for GET /getComment endpoint
-      // edit comment page? new message from name alert? Even then doesn't make as much sense as just grabbing from the updated comments feed...
-  
+
   // NICE
     // Accessibility
     // Integration testing
@@ -64,31 +66,32 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <AppHeader />
-        <Routes>
-          <Route exact path="/" 
-            element={
-              <HomePage 
-                comments={comments}
-                submitComment={submitComment}
-                deleteComment={deleteComment}
-                ReadyState={ReadyState}
-                readyState={readyState}
-                deleteAllComments={deleteAllComments}
-              />
-            } 
-          />
-          <Route path="/edit/:id" 
-            element={
-              <EditCommentPage 
-                editComment={editComment}
-                deleteComment={deleteComment}
-              />
-            }
-          />
-        </Routes>
-      </div>
+      <Grid container className="App" direction="column">
+        <Grid>
+          <Routes>
+            <Route exact path="/" 
+              element={
+                <HomePage 
+                  comments={comments}
+                  submitComment={submitComment}
+                  deleteComment={deleteComment}
+                  ReadyState={ReadyState}
+                  readyState={readyState}
+                  deleteAllComments={deleteAllComments}
+                />
+              } 
+            />
+            <Route path="/edit/:id" 
+              element={
+                <EditCommentPage 
+                  editComment={editComment}
+                  deleteComment={deleteComment}
+                />
+              }
+            />
+          </Routes>
+        </Grid>
+      </Grid>
     </Router>
   );
 }
