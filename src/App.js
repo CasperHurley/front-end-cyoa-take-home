@@ -54,16 +54,6 @@ function App() {
     sendMessage(JSON.stringify({type: 'editComment', id, name, message }))
   }
 
-  // NEED
-
-  // NICE
-    // Accessibility
-    // Integration testing
-    // Profanity check
-    // Intl
-    // Global header
-    // Some css razzle dazzle
-
   return (
     <Router>
       <Grid container className="App" direction="column">

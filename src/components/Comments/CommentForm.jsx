@@ -35,13 +35,14 @@ function CommentForm({comment, editComment, submitComment}) {
 
     return (
         <Box 
-            id='new-comment-form'
+            id='comment-form'
             component="form"
         >
             <Grid container direction="column" spacing={2}>
                 <Grid item>
                     <TextField 
                         label="Name"
+                        data-testid="comment-name-input"
                         // helperText="Enter your name"
                         value={nameInput} 
                         onChange={e => setNameInput(e.target.value)}
@@ -50,6 +51,7 @@ function CommentForm({comment, editComment, submitComment}) {
                 <Grid item>
                     <TextField  
                         label="Message"
+                        data-testid="comment-message-input"
                         multiline
                         // helperText="Write your message"
                         value={messageInput} 
@@ -57,7 +59,7 @@ function CommentForm({comment, editComment, submitComment}) {
                     />
                 </Grid>
                 <Grid item>
-                    <Button variant="outlined" onClick={handleClickSubmit}>{editComment ? "Update" : "Comment"}</Button>
+                    <Button data-testid="comment-submit-button" variant="outlined" onClick={handleClickSubmit}>{editComment ? "Update" : "Comment"}</Button>
                 </Grid>
             </Grid>
             

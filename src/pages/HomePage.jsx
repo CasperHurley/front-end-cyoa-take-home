@@ -4,7 +4,6 @@ import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 
 function HomePage({comments, submitComment, deleteComment, ReadyState, readyState, deleteAllComments}) {
-    // Could add an "Are you sure?" before allowing delete all to happen
     return (
         <Grid container spacing={2} direction="column">
             <Grid item>

@@ -20,6 +20,8 @@ function Comment({comment, deleteComment}) {
         navigate(`/edit/${id}`)
     }
 
+    console.log("COMMENT LOADED", name, message)
+
     return ( 
         <Card className="comment" variant="outlined">
             <CardActions className="comment_header">
