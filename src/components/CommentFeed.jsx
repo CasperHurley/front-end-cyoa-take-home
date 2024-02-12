@@ -1,26 +1,13 @@
-import { useState, useEffect } from 'react' 
 import Comment from './Comment'
-import { Api } from '../api/index'
 
-function CommentFeed() {
-    const [comments, setComments] = useState({data: [], error: null, isLoading: false})
+function CommentFeed({comments}) {
+    
 
-    useEffect(() => {
-        setComments(prev => ({...prev, isLoading: true}))
-        Api.get('/getComments').then(data => {
-            console.log("getComments response", data)
-            setComments(prev => ({...prev, data}))
-        })
-        .catch(error => {
-            console.log("Error fetching comments", error)
-            setComments(prev => ({...prev, error}))
-        })
-        .finally(() => {
-            setComments(prev => ({...prev, isLoading: false}))
-        })
-    }, [])
-
-    console.log(comments.data)
+    // useEffect(() => {
+    //     if (lastMessage !== null) {
+    //         setComments((prev) => prev.concat(lastMessage));
+    //     }
+    //   }, [lastMessage, setComments]);
 
     return (
         <div id='comments-feed'>
