@@ -1,23 +1,28 @@
+import { useState } from 'react'
 import Comment from './Comment'
+import Stack from '@mui/material/Stack'
+import Paper from '@mui/material/Paper'
+import orderBy from 'lodash/orderBy'
 
 function CommentFeed({comments, deleteComment}) {
-    // make it scroll
+    const [sortDirection, setSortDirection] = useState('asc') // add selector for 'asc' or 'desc'
     
     return (
-        <div id='comments-feed'>
+        <Stack id='comments-feed' spacing={2}>
             {
                 comments.data ? 
-                comments.data.map(comment => (
-                    <Comment 
-                        key={comment.id}
-                        comment={comment}
-                        deleteComment={deleteComment}
-                    />
+                orderBy(comments.data, ['created'], [sortDirection]).map(comment => (
+                    <Paper key={comment.id}>
+                        <Comment 
+                            comment={comment}
+                            deleteComment={deleteComment}
+                        />  
+                    </Paper>
                 ))
                 :
-                <div>No comments available</div>
+                <Paper>No comments available</Paper>
             }
-        </div>
+        </Stack>
     );
 }
 
