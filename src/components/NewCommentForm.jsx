@@ -2,14 +2,15 @@ import { useState } from 'react'
 import { Api } from '../api/index' 
 
 function NewCommentForm() {
-    const [name, setName] = useState()
-    const [message, setMessage] = useState()
+    const [name, setName] = useState("")
+    const [message, setMessage] = useState("")
     // add one for call status? (success or error, reset on click submit again)
 
     const submitComment = () => {
         // POST /createComment
         Api.post('/createComment', {name, message})
-        .then(resp => {
+        .then(response => {
+            console.log("RESP", response)
             // notify success
             // comment feed should update automatically from websocket connection
         })

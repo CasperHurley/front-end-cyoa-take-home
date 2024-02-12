@@ -38,7 +38,7 @@ app.get('/getComments', function(request, response) {
   });
 });
 
-app.delete('/deleteComments', function(request, response) {
+app.delete('/deleteAllComments', function(request, response) {
   comment.deleteComments().then(result => {
     response.send(result);
   });

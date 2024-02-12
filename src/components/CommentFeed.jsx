@@ -7,8 +7,9 @@ function CommentFeed() {
 
     useEffect(() => {
         setComments(prev => ({...prev, isLoading: true}))
-        Api.get('/getComments').then(response => {
-            setComments(prev => ({...prev, data: response.data}))
+        Api.get('/getComments').then(data => {
+            console.log("getComments response", data)
+            setComments(prev => ({...prev, data}))
         })
         .catch(error => {
             console.log("Error fetching comments", error)
@@ -18,6 +19,8 @@ function CommentFeed() {
             setComments(prev => ({...prev, isLoading: false}))
         })
     }, [])
+
+    console.log(comments.data)
 
     return (
         <div id='comments-feed'>
@@ -30,7 +33,7 @@ function CommentFeed() {
                     />
                 ))
                 :
-                <div>No Comments Available</div>
+                <div>No comments available</div>
             }
         </div>
     );
