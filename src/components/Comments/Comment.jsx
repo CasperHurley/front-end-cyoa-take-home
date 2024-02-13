@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { formatDate } from '../../util/CommentUtil/CommentUtil'
 
 function Comment({comment, deleteComment}) {
-    const {id, name, message, created, updated} = comment // could use updated if we wanted to show edited @ time
+    const {id, name, message, created, updated} = comment // could use updated if we wanted to show edited @ time, or maybe to order a list of notifications when edits are made
 
     const navigate = useNavigate()
 

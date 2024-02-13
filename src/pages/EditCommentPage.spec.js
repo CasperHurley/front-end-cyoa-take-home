@@ -1,5 +1,5 @@
 describe("EditCommentPage", () => {
-    // for each of these
+    // for each of these tests
     // render page
     // mock REST call (GET /api/comment/:id) to handle loading comment
     // usually I do this with axios, pretty sure for fetch you'd have to mock the global fetch object instead

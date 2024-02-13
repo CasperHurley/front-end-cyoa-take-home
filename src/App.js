@@ -58,6 +58,10 @@ function App() {
   }
 
   // I added this router as an excuse to use the getComment REST endpoint on load of edit comment page
+  // Might be cool to z-index and elevate any success/error alerts in the app to a single stack at this level (outside of the pages level)
+    // Normally I work with ant design, which provides a nice hook for doing that along with auto disappearing after an interval
+    // Material doesn't seem to offer something as nice
+
   return (
     <Router>
       <Grid container className="App" direction="column">

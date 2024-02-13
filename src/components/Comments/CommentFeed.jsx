@@ -6,7 +6,7 @@ import orderBy from 'lodash/orderBy'
 import isEmpty from 'lodash/isEmpty'
 
 function CommentFeed({comments, deleteComment}) {
-    // Could add a toggle for showing comments in asc or decs order
+    // Could be cool to add a toggle for showing comments in asc or decs order
     return (
         <Stack className='comments-feed' spacing={2} sx={{ height: '40vh', overflow: 'scroll' }}>
             {

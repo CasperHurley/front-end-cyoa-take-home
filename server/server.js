@@ -68,12 +68,12 @@ app.ws('/comments', async (ws, req) => {
   
 });
 
-// Created a common function to send updated list of comments to each connected client on any of the above actions
+// Common function to send updated list of comments to each connected client on any of the above actions
 async function broadcastComments() {
   try {
     const comments = await comment.getAllComments();
-    socket.getWss().clients.forEach(client => {
-      if (client.readyState === client.OPEN) {
+    socket.getWss().clients.forEach(client => { 
+      if (client.readyState === client.OPEN) { // I haven't worked with socket io before, but my understanding is it offers a much more robust handling of this
         client.send(JSON.stringify({type: 'comments', comments}));
       }
     });
@@ -82,18 +82,18 @@ async function broadcastComments() {
   }
 };
 
-// Kept the /getComment REST endpoint because I wasn't sure how much making REST calls was a requirement given the instructions
-// If I had more REST endpoints still, I would have create a CommentsController files and routed all /api/comments/* there 
+// I kept the original /getComment REST endpoint because I wasn't sure how much making REST calls was a requirement given the instructions 
+// If I had the other REST endpoints still, I would have created a CommentsController file and routed all /api/comments/* there 
 app.get('/api/comment/:id', async function(request, response, next) {
   try {
     const result = await comment.getComment(request.params.id)
     response.send(result)
   } catch(err) {
-    next(err) // send to common error handler
+    next(err) // Send to common error handler
   }
 });
 
-// Common server error handler
+// Common server error handler (would be more useful with more REST endpoints)
 app.use((error, request, response, next) => {
   if (error.status) {
     response.status(error.status).send(error.message);
