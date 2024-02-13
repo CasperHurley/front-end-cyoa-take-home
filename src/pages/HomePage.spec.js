@@ -1,4 +1,4 @@
-import { render, screen, act, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import HomePage from './HomePage'
 import * as router from 'react-router'
 

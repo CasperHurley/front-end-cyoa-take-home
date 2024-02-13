@@ -1,17 +1,16 @@
-import { useState } from 'react'
 import Comment from './Comment'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 import orderBy from 'lodash/orderBy'
+import isEmpty from 'lodash/isEmpty'
 
 function CommentFeed({comments, deleteComment}) {
-    const [sortDirection, setSortDirection] = useState('asc') // add selector for 'asc' or 'desc'
-    
     return (
-        <Stack id='comments-feed' spacing={2}>
+        <Stack className='comments-feed' spacing={2} sx={{ height: '40vh', overflow: 'scroll' }}>
             {
-                comments.data ? 
-                orderBy(comments.data, ['created'], [sortDirection]).map(comment => (
+                !isEmpty(comments.data) ? 
+                orderBy(comments.data, ['created'], ['desc']).map(comment => (
                     <Paper key={comment.id}>
                         <Comment 
                             comment={comment}
@@ -20,7 +19,7 @@ function CommentFeed({comments, deleteComment}) {
                     </Paper>
                 ))
                 :
-                <Paper>No comments available</Paper>
+                <Typography>No comments available</Typography>
             }
         </Stack>
     );

@@ -3,47 +3,54 @@ import { useParams } from 'react-router-dom';
 import { Api } from '../api/index'
 import CommentForm from '../components/Comments/CommentForm'
 import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert';
+import { Link } from 'react-router-dom'
 
 function EditCommentPage({editComment, deleteComment}) {
-    const [comment, setComment] = useState({data: {}, error: null, isLoading: false})
+    const [commentResp, setCommentResp] = useState({data: {}, error: null, isLoading: false})
     const { id } = useParams()
 
     useEffect(() => {
-        getComment()
+        fetchComment()
     }, [])
 
-    const getComment = () => {
-        setComment(prev => ({...prev, isLoading: true}))
+    const fetchComment = () => {
+        setCommentResp(prev => ({...prev, isLoading: true}))
         Api.get(`/api/comment/${id}`)
         .then(data => {
-            console.log("data", data)
-            setComment(prev => ({...prev, data}))
+            setCommentResp(prev => ({...prev, data}))
         })
         .catch(error => {
             console.log("Error fetching comment", error)
-            setComment(prev => ({...prev, error}))
+            setCommentResp(prev => ({...prev, error}))
         })
         .finally(() => {
-            setComment(prev => ({...prev, isLoading: false}))
+            setCommentResp(prev => ({...prev, isLoading: false}))
         })
     }
 
     return (
         <Grid container direction="column" spacing={2}>
             <Grid item>
+                <Breadcrumbs>
+                    <Link to="/"><Typography>HOME</Typography></Link>
+                    <Typography>EDIT</Typography>
+                </Breadcrumbs>
+            </Grid>
+            {commentResp.error && <Grid item><Alert severity="error">Error fetching comment for editing.</Alert></Grid>}
+            <Grid item>
                 <Typography variant="h5">Edit Comment</Typography>
             </Grid>
             <Grid item>
                 <CommentForm 
-                    comment={comment.data} 
+                    commentResp={commentResp} 
                     editComment={editComment}
+                    deleteComment={deleteComment}
                 />
             </Grid>
-            <Grid item>
-                <Button variant="outlined" color="error" onClick={() => deleteComment(id)}>Delete</Button>
-            </Grid>
+            
         </Grid>
     );
 }

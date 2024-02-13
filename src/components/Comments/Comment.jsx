@@ -20,8 +20,6 @@ function Comment({comment, deleteComment}) {
         navigate(`/edit/${id}`)
     }
 
-    console.log("COMMENT LOADED", name, message)
-
     return ( 
         <Card className="comment" variant="outlined">
             <CardActions className="comment_header">
@@ -35,11 +33,11 @@ function Comment({comment, deleteComment}) {
                 </Grid>
             </CardActions>
             <CardContent>
-                <Grid container direction="column">
-                    <Grid item justifySelf={'center'}>
+                <Grid container direction="column" spacing={2}>
+                    <Grid item alignSelf={'center'}>
                         <Typography>{message}</Typography>
                     </Grid>
-                    <Grid item justifySelf={'flex-start'}>
+                    <Grid item alignSelf={'flex-start'}>
                         <Typography>{name} on {formatDate(created)}</Typography>
                     </Grid>
                 </Grid>

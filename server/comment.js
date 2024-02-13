@@ -3,6 +3,8 @@ class Comment {
     this.dataAccessObject = dataAccessObject;
   }
 
+  // Added the ability to edit a comment plus an updated column to track when that happened
+
   createTable() {
     const sql = `
     CREATE TABLE IF NOT EXISTS comments (

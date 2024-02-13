@@ -5,22 +5,22 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 
-function CommentForm({comment, editComment, submitComment}) {
+function CommentForm({commentResp, editComment, submitComment, deleteComment}) {
     const [nameInput, setNameInput] = useState("")
     const [messageInput, setMessageInput] = useState("")
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (comment) {
-            setNameInput(comment.name)
-            setMessageInput(comment.message)
+        if (commentResp?.data) {
+            setNameInput(commentResp.data.name)
+            setMessageInput(commentResp.data.message)
         }
-    }, [comment])
+    }, [commentResp])
 
     const handleClickSubmit = () => {
-        if (editComment) {
-            editComment({...comment, name: nameInput, message: messageInput})
+        if (commentResp?.data) {
+            editComment({...commentResp.data, name: nameInput, message: messageInput})
             navigate('/')
         } else {
             submitComment(nameInput, messageInput)
@@ -33,17 +33,20 @@ function CommentForm({comment, editComment, submitComment}) {
         setMessageInput("")
     }
 
+    // form validation
+    // screen reader accessibility
+    // add profanity check
+
     return (
         <Box 
-            id='comment-form'
+            className='comment-form'
             component="form"
         >
             <Grid container direction="column" spacing={2}>
                 <Grid item>
                     <TextField 
                         label="Name"
-                        data-testid="comment-name-input"
-                        // helperText="Enter your name"
+                        fullWidth
                         value={nameInput} 
                         onChange={e => setNameInput(e.target.value)}
                     />
@@ -51,15 +54,30 @@ function CommentForm({comment, editComment, submitComment}) {
                 <Grid item>
                     <TextField  
                         label="Message"
-                        data-testid="comment-message-input"
+                        fullWidth
                         multiline
-                        // helperText="Write your message"
+                        rows={4}
                         value={messageInput} 
                         onChange={e => setMessageInput(e.target.value)} 
                     />
                 </Grid>
                 <Grid item>
-                    <Button data-testid="comment-submit-button" variant="outlined" onClick={handleClickSubmit}>{editComment ? "Update" : "Comment"}</Button>
+                    <Grid container justifyContent={'end'} spacing={2}>
+                        <Grid item>
+                            <Button 
+                                data-testid="comment-submit-button" 
+                                variant="outlined" 
+                                onClick={handleClickSubmit}
+                                disabled={!nameInput || !messageInput || commentResp?.error}
+                            >{editComment ? "Update" : "Comment"}</Button>
+                        </Grid>
+                        {
+                            commentResp && 
+                            <Grid item>
+                                <Button disabled={commentResp.error} variant="outlined" color="error" onClick={() => deleteComment(commentResp.data?.id)}>Delete</Button>
+                            </Grid>
+                        }
+                    </Grid>
                 </Grid>
             </Grid>
             
