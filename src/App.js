@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography'
 function App() {
   const [comments, setComments] = useState({data: [], error: null, isLoading: false})
 
-  const SOCKET_URL = 'ws://localhost:3001/comments';
+  const SOCKET_URL = 'ws://localhost:3001/comments'; 
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(
     SOCKET_URL, 
@@ -57,9 +57,7 @@ function App() {
     sendMessage(JSON.stringify({type: 'editComment', id, name, message }))
   }
 
-  // I added this router to create a use for the getComment REST endpoint
-    // Edit comment page takes in ID as param, fetches comment by ID
-
+  // I added this router as an excuse to use the getComment REST endpoint on load of edit comment page
   return (
     <Router>
       <Grid container className="App" direction="column">

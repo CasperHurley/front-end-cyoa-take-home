@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { formatDate } from '../../util/CommentUtil/CommentUtil'
 
 function Comment({comment, deleteComment}) {
-    const {id, name, message, created, updated} = comment
+    const {id, name, message, created, updated} = comment // could use updated if we wanted to show edited @ time
 
     const navigate = useNavigate()
 
@@ -25,7 +25,7 @@ function Comment({comment, deleteComment}) {
             <CardActions className="comment_header">
                 <Grid container justifyContent={'end'}>
                     <Grid item>
-                        <Button size='small' className='comment_header_edit' onClick={handleClickEdit}>EDIT</Button>
+                        <Button size='small' className='comment_header_edit' data-testid={`edit-comment-button-${id}`} onClick={handleClickEdit}>EDIT</Button>
                     </Grid>
                     <Grid item>
                         <Button size='small' className='comment_header_delete' onClick={handleClickDelete}>DELETE</Button>

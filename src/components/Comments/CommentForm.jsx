@@ -33,9 +33,7 @@ function CommentForm({commentResp, editComment, submitComment, deleteComment}) {
         setMessageInput("")
     }
 
-    // form validation
-    // screen reader accessibility
-    // add profanity check
+    // Could maybe do more to make sure this is screen reader accessible
 
     return (
         <Box 
